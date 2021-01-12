@@ -5,7 +5,7 @@ const container = document.querySelector('.scene');
 const scene = new THREE.Scene();
 // Je crée la scène
 
-const fov = 75;
+const fov = 55;
 // Je définis le champ de vision de la camera à 75 degrés
 const aspect = container.clientWidth / container.clientHeight
 // Je définis le ratio de la caméra
@@ -16,8 +16,13 @@ const far = 500;
 
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 // Je crée la caméra avec les paramètres donnés ci-dessous
-camera.position.set( 0, 0, 5 );
+camera.position.set( 0, 1.5, 7 );
 // Je donne une position de départ à la caméra
+
+const ambient = new THREE.AmbientLight(0x404040, 30);
+// Je crée une lumiere ambiante, diffuse dans toutes les directions
+// La première valeur correspond à la couleur de la lumière et la deuxième à son intensité
+scene.add(ambient);
 
 const renderer = new THREE.WebGLRenderer({antialias:true, alpha: true});
 // Je crée le moteur de rendu
@@ -32,9 +37,12 @@ container.appendChild(renderer.domElement);
 // CHARGEMENT MODELES 3D
 const loaderPorsche911turbo = new THREE.GLTFLoader();
 // Je crée le loader qui va me permettre de récupérer mon élement 3D
-loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/scene.gltf', function(gltf){
+loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/scene.gltf', function(porsche911turbo){
     // Je récupère le modèle 3D
-    scene.add(gltf.scene);
+    console.log(porsche911turbo);
+    porsche911turbo.scene.position.x = -3.5;
+    porsche911turbo.scene.rotation.y = .9;
+    scene.add(porsche911turbo.scene);
     // J'ajoute l'élément récupéré à la scène
 })
 
