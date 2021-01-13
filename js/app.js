@@ -19,10 +19,11 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.set( 0, 1.7, 7 );
 // Je donne une position de départ à la caméra
 
-const ambient = new THREE.AmbientLight(0x404040, 30);
+const light = new THREE.PointLight(0x404040, 40);
 // Je crée une lumiere ambiante, diffuse dans toutes les directions
 // La première valeur correspond à la couleur de la lumière et la deuxième à son intensité
-scene.add(ambient);
+light.position.set(0,15,0)
+scene.add(light);
 
 const renderer = new THREE.WebGLRenderer({antialias:true, alpha: true});
 // Je crée le moteur de rendu
