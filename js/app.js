@@ -16,7 +16,7 @@ const far = 500;
 
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 // Je crée la caméra avec les paramètres donnés ci-dessous
-camera.position.set( 0, 1.5, 7 );
+camera.position.set( 0, 1.7, 7 );
 // Je donne une position de départ à la caméra
 
 const ambient = new THREE.AmbientLight(0x404040, 30);
@@ -46,6 +46,17 @@ loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/
     // J'ajoute l'élément récupéré à la scène
 })
 
+const loaderPorsche911carrera = new THREE.GLTFLoader();
+loaderPorsche911carrera.load('../assets/3D models/free_porsche_911_carrera_4s/scene.gltf', function(porsche911carrera){
+    porsche911carrera.scene.position.x = 3.5;
+    porsche911carrera.scene.position.y = .7;
+    porsche911carrera.scene.scale.x = 1.2;
+    porsche911carrera.scene.scale.y = 1.2;
+    porsche911carrera.scene.scale.z = 1.2;
+    porsche911carrera.scene.rotation.y = -.9;
+    scene.add(porsche911carrera.scene);
+})
+
 const animate = function () {
     requestAnimationFrame(animate);
     // Je crée une render loop qui va permettre de recalculer la scène 60fois/seconde (sur un écran classique).
@@ -54,3 +65,16 @@ const animate = function () {
 };
 
 animate();
+
+function onWindowResize(){
+    camera.aspect = container.clientWidth / container.clientHeight
+    // Je lui demande de recalculer l'aspect de la camera
+    camera.updateProjectionMatrix();
+    //J'appelle une fonction qui s'occupe de tout pour nous
+
+    renderer.setSize(container.clientWidth, container.clientHeight)
+    // Je lui reprécise la taille de l'écran à rendre
+}
+
+window.addEventListener("resize", onWindowResize)
+// A chaque changment de taille, je lance la fonction onWindowResize
