@@ -19,11 +19,39 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.set( 0, 1.7, 7 );
 // Je donne une position de départ à la caméra
 
-const light = new THREE.PointLight(0x404040, 40);
-// Je crée une lumiere ambiante, diffuse dans toutes les directions
-// La première valeur correspond à la couleur de la lumière et la deuxième à son intensité
-light.position.set(0,15,0)
-scene.add(light);
+{
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.PointLight(color, intensity);
+    light.position.set(0, 12, 0);
+    scene.add(light);
+}
+
+{
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light2 = new THREE.PointLight(color, intensity);
+    light2.position.set(- 2, 12, 3);
+    // scene.add(light2);
+}
+
+{
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light3 = new THREE.PointLight(color, intensity);
+    light3.position.set(-10, 5, 0);
+    // scene.add(light3);
+}
+
+{
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const directionnalLight = new THREE.DirectionalLight(color, intensity);
+    directionnalLight.position.set(0,10,10);
+    directionnalLight.castshadow = true;
+    scene.add(directionnalLight);
+
+}
 
 const renderer = new THREE.WebGLRenderer({antialias:true, alpha: true});
 // Je crée le moteur de rendu
@@ -41,6 +69,7 @@ const loaderPorsche911turbo = new THREE.GLTFLoader();
 loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/scene.gltf', function(porsche911turbo){
     // Je récupère le modèle 3D
     console.log(porsche911turbo);
+    porsche911turbo.scene.castShadow= true;
     porsche911turbo.scene.position.x = -3.5;
     porsche911turbo.scene.rotation.y = .9;
     scene.add(porsche911turbo.scene);
@@ -49,14 +78,33 @@ loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/
 
 const loaderPorsche911carrera = new THREE.GLTFLoader();
 loaderPorsche911carrera.load('../assets/3D models/free_porsche_911_carrera_4s/scene.gltf', function(porsche911carrera){
-    porsche911carrera.scene.position.x = 3.5;
-    porsche911carrera.scene.position.y = .7;
-    porsche911carrera.scene.scale.x = 1.2;
-    porsche911carrera.scene.scale.y = 1.2;
-    porsche911carrera.scene.scale.z = 1.2;
+    porsche911carrera.scene.position.x = 2.5;
+    porsche911carrera.scene.position.y = .9;
+    porsche911carrera.scene.position.z = .9;
     porsche911carrera.scene.rotation.y = -.9;
     scene.add(porsche911carrera.scene);
 })
+
+{
+    const planeSize = 40;
+
+    const loader = new THREE.TextureLoader();
+    const texture = loader.load('https://threejsfundamentals.org/threejs/resources/images/checker.png');
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.magFilter = THREE.NearestFilter;
+    const repeats = planeSize / 2;
+    texture.repeat.set(repeats, repeats);
+
+    const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize/2);
+    const planeMat = new THREE.MeshStandardMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+    });
+    const mesh = new THREE.Mesh(planeGeo, planeMat);
+    mesh.rotation.x = Math.PI * -.5;
+    scene.add(mesh);
+  }
 
 const animate = function () {
     requestAnimationFrame(animate);
