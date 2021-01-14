@@ -19,6 +19,16 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.set( 0, 1.7, 7 );
 // Je donne une position de départ à la caméra
 
+// Porsche 911 CarreraS camera position
+// camera.position.set( 6, 1, 0.5 );
+// camera.rotation.set(0,1.5,0);
+
+// Porsche 911 Turbo
+// camera.position.set( -7.2, 1, -.5 );
+// camera.rotation.set(0,-1.6,0);
+
+
+// LUMIERES
 {
     const color = 0xFFFFFF;
     const intensity = 1;
