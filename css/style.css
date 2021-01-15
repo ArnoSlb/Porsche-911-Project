@@ -8,3 +8,25 @@ canvas {
     width: 100%;
     height: 100%;
 }
+
+.zone {
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+#left {
+    width: 40vw;
+    /* background-color: teal; */
+}
+
+#middle {
+    width: 20vw;
+    /* background-color: grey; */
+}
+
+#right {
+    width: 40vw;
+    /* background-color: red; */
+}

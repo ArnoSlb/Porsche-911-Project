@@ -80,7 +80,7 @@ loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/
     // Je récupère le modèle 3D
     console.log(porsche911turbo);
     porsche911turbo.scene.castShadow= true;
-    porsche911turbo.scene.position.x = -3.5;
+    porsche911turbo.scene.position.x = -3.6;
     porsche911turbo.scene.rotation.y = .9;
     scene.add(porsche911turbo.scene);
     // J'ajoute l'élément récupéré à la scène
@@ -88,7 +88,7 @@ loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/
 
 const loaderPorsche911carrera = new THREE.GLTFLoader();
 loaderPorsche911carrera.load('../assets/3D models/free_porsche_911_carrera_4s/scene.gltf', function(porsche911carrera){
-    porsche911carrera.scene.position.x = 2.5;
+    porsche911carrera.scene.position.x = 3.1;
     porsche911carrera.scene.position.y = .9;
     porsche911carrera.scene.position.z = .9;
     porsche911carrera.scene.rotation.y = -.9;
@@ -125,6 +125,7 @@ const animate = function () {
 
 animate();
 
+
 function onWindowResize(){
     camera.aspect = container.clientWidth / container.clientHeight
     // Je lui demande de recalculer l'aspect de la camera
@@ -137,3 +138,30 @@ function onWindowResize(){
 
 window.addEventListener("resize", onWindowResize)
 // A chaque changment de taille, je lance la fonction onWindowResize
+
+function mouseOnLeftSide(){
+    console.log('je suis sur la porsche 911 Turbo de 1975');
+    camera.position.set( -8, 1.2, -.5 );
+    camera.rotation.set(0,-1.6,0);
+}
+
+const middle = document.querySelector("#middle");
+middle.addEventListener("mouseover", mouseOnMiddle);
+
+function mouseOnMiddle(){
+    // console.log('je suis sur la porsche 911 Turbo de 1975');
+    camera.position.set( 0, 1.7, 7 );
+    camera.rotation.set(0,0,0);
+}
+
+const leftSide = document.querySelector("#left");
+leftSide.addEventListener("mouseover", mouseOnLeftSide);
+
+function mouseOnRightSide(){
+    console.log('je suis sur la porsche 911 CarreraS');
+    camera.position.set( 7.2, 1.2, 0.5 );
+    camera.rotation.set(0,1.6,0);
+}
+
+const rightSide = document.querySelector("#right");
+rightSide.addEventListener("mouseover", mouseOnRightSide);
