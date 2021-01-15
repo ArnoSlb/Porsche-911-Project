@@ -11,22 +11,52 @@ canvas {
 
 .zone {
     position: absolute;
+    top: calc(100vh / 2.3);
     display: flex;
     width: 100vw;
     height: 100vh;
 }
 
+.background {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgb(255, 255, 255), rgb(185, 186, 187) 80%);
+}
+
+.header {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px rgb(185, 186, 187) solid ;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 100px;
+}
+
+#porsche-logo {
+    height: 50px;
+    margin-bottom: 15px;
+}
+
 #left {
     width: 40vw;
+    height: 60vh;
     /* background-color: teal; */
+
 }
 
 #middle {
     width: 20vw;
+    height: 60vh;
     /* background-color: grey; */
 }
 
 #right {
     width: 40vw;
+    height: 60vh;
     /* background-color: red; */
 }
+

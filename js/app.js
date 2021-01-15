@@ -1,6 +1,39 @@
-
 const container = document.querySelector('.scene');
 // Je cible la balise html qui a pour class "scene"
+
+var manager = new THREE.LoadingManager(); 
+
+manager.onStart = function(item, loaded, total) { 
+
+    console.log('Loading started'); 
+    // const chargement = <h1>Chargement</h1>
+    // container.appendChild(chargement.domElement);
+
+    
+
+}; 
+
+manager.onLoad = function() { 
+
+    console.log('Loading complete'); 
+
+}; 
+
+manager.onProgress = function(item, loaded, total) { 
+
+    console.log(item, loaded, total); 
+
+}; 
+
+manager.onError = function(url) { 
+
+    console.log('Error loading'); 
+
+}; 
+
+
+
+
 
 const scene = new THREE.Scene();
 // Je crée la scène
@@ -73,8 +106,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 container.appendChild(renderer.domElement);
 // J'injecte le <canvas> créé par three.js dans la balise html ciblé dans container
 
+
 // CHARGEMENT MODELES 3D
-const loaderPorsche911turbo = new THREE.GLTFLoader();
+const loaderPorsche911turbo = new THREE.GLTFLoader(manager);
 // Je crée le loader qui va me permettre de récupérer mon élement 3D
 loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/scene.gltf', function(porsche911turbo){
     // Je récupère le modèle 3D
@@ -86,7 +120,7 @@ loaderPorsche911turbo.load('../assets/3D models/free_1975_porsche_911_930_turbo/
     // J'ajoute l'élément récupéré à la scène
 })
 
-const loaderPorsche911carrera = new THREE.GLTFLoader();
+const loaderPorsche911carrera = new THREE.GLTFLoader(manager);
 loaderPorsche911carrera.load('../assets/3D models/free_porsche_911_carrera_4s/scene.gltf', function(porsche911carrera){
     porsche911carrera.scene.position.x = 3.1;
     porsche911carrera.scene.position.y = .9;
@@ -95,10 +129,28 @@ loaderPorsche911carrera.load('../assets/3D models/free_porsche_911_carrera_4s/sc
     scene.add(porsche911carrera.scene);
 })
 
+const loaderPorsche911 = new THREE.GLTFLoader(manager);
+loaderPorsche911.load('../assets/3D models/porsche_911/scene.gltf', function(loader){
+    const porsche911 = loader.scene.children[0];
+    console.log(loader)
+    porsche911.scale.x = .011;
+    porsche911.scale.y = .011;
+    porsche911.scale.z = .011;
+
+    
+    porsche911.position.x = 3;
+    porsche911.position.y = 0.05;
+    porsche911.position.z = -5;
+
+    porsche911.rotation.z = -.9;
+    
+    // scene.add(porsche911);
+})
+
 {
     const planeSize = 40;
 
-    const loader = new THREE.TextureLoader();
+    const loader = new THREE.TextureLoader(manager);
     const texture = loader.load('https://threejsfundamentals.org/threejs/resources/images/checker.png');
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
@@ -139,10 +191,34 @@ function onWindowResize(){
 window.addEventListener("resize", onWindowResize)
 // A chaque changment de taille, je lance la fonction onWindowResize
 
+function tweenCamera( targetPosition, duration ) {
+
+    // controls.enabled = false;
+
+    var position = new THREE.Vector3().copy( camera.position );
+
+    var tween = new createjs.Tween ( position )
+        .to ( targetPosition, duration )
+        // .OnUpdate( function () {
+        //     camera.position.copy( position );
+        //     // camera.lookAt( controls.target );
+        // })
+        // .OnComplete( function () {
+        //     camera.position.copy( targetPosition );
+        //     // camera.lookAt( controls.target );
+        //     // controls.enabled = true;
+        // })
+        // .start();
+}
+
+
+
 function mouseOnLeftSide(){
     console.log('je suis sur la porsche 911 Turbo de 1975');
     camera.position.set( -8, 1.2, -.5 );
     camera.rotation.set(0,-1.6,0);
+    // createjs.Tween.get(camera.position).to({ x: -8, y: 1.2, z:-.5});
+    
 }
 
 const middle = document.querySelector("#middle");
@@ -165,3 +241,4 @@ function mouseOnRightSide(){
 
 const rightSide = document.querySelector("#right");
 rightSide.addEventListener("mouseover", mouseOnRightSide);
+
